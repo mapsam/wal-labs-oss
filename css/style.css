@@ -1,0 +1,197 @@
+/* RESET */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	background-color:#F1F7FC;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* COLORS
+Dark Blue: #027DC5;
+Medium Blue: #78B7E6;
+Light Blue: #F1F7FC;
+Text Blue: #6FA6CE;
+Golden: #F3DB2E;
+Orange: #F37423;
+Grey: #ECF1F1;
+*/
+
+
+/* WALMART OSS */
+body {
+	font-family:Helvetica, sans-serif;
+}
+
+/* 
+Navigation Bar 
+*/
+
+nav {
+	border-right:#027DC5 solid 1px;
+}
+.nav-contain {
+	display:block;
+	width:100%;
+	margin:auto;
+}
+#logo {
+	width:100%;
+	background-color:#027DC5;
+	text-align:center;
+	padding:20px 0;
+}
+#info {
+	height:50px;
+}
+#controls {
+}
+nav ul {
+	width:100%;
+}
+nav ul li {
+	width:100%;
+	padding:15px 0;
+	margin:2px auto;
+	background-color:#f9f9f9;
+	border-right-width:10px;
+	border-right-style:solid;
+	cursor:pointer;
+	box-sizing:border-box;
+  	-moz-box-sizing:border-box;
+  	-webkit-box-sizing:border-box;
+	-o-transition:.2s;
+	-ms-transition:.2s;
+	-moz-transition:.2s;
+	-webkit-transition:.2s;`
+	transition:.2s;
+}
+nav ul li:hover {
+	background-color:#ECF1F1;
+	border-width:20px;
+}
+nav ul li p {
+	text-transform:uppercase;
+	letter-spacing:0.15em;
+	padding-left:15px;
+	color:#999;
+	font-weight:100;
+	font-size:0.9em;
+}
+#All, .All {border-color:#333}
+#Undefined, .Undefined {border-color: #ECF1F1;}
+#JavaScript, .JavaScript {border-color:#F37423}
+#CSS, .CSS {border-color:#0367A6}
+#Perl, .Perl {border-color:#71C6D9}
+#Ruby, .Ruby {border-color:#A6242F}
+#Objective-C, .Objective-C {border-color:#6FA6CE}
+#Cplus, .Cplus {border-color:#F3DB2E}
+#Scala, .Scala {border-color:#027DC5}
+#Shell, .Shell {border-color:#F2E6D8}
+#PHP, .PHP {border-color:#F2E6D8}
+
+
+.active, .active p {
+	color:#333;
+	font-weight:bold;
+	border-width:20px;
+	background-color:#ECF1F1;
+}
+
+
+/* 
+Repositories 
+*/
+
+#main {
+}
+#loading {
+	position:absolute;
+	top:40px;
+	left:40px;
+}
+#main ul {
+	display:none;
+}
+#main ul li {
+	box-shadow:0 1px 2px #c0c0c0;
+	border-right-width:10px;
+	border-right-style:solid;
+	opacity:0.8;
+	padding:10px;
+	box-sizing:border-box;
+  	-moz-box-sizing:border-box;
+  	-webkit-box-sizing:border-box;
+  	-o-transition:.2s;
+	-ms-transition:.2s;
+	-moz-transition:.2s;
+	-webkit-transition:.2s;`
+	transition:.2s;
+  	background:#fff;
+  	overflow:hidden;
+  	vertical-align: top; /* keeps all boxes symmetrically inline */
+}
+#main ul li:hover {
+	background-color:#f6f6f6;
+	opacity:1.0;
+}
+a {
+	text-decoration:none;
+}
+h1 {
+	margin-bottom:5px;
+}
+h1 a {
+	font-size:1.3em;
+	font-weight:900;
+	letter-spacing:-0.05em;
+	color:#333;
+	text-decoration:none;
+}
+h1 a:hover {
+	text-decoration:underline;
+}
+.repo-content p {
+	font-size:0.9em;
+	font-weight:300;
+	color:#666;
+}
+.repo-meta {
+	display:block;
+	margin:auto;
+	height:20px;
+	font-size:0.8em;
+	color:#888;
+}
+.repo-meta img {
+	width:12px;
+	margin-left:15px;
+	height:auto;
+	opacity:0.6;
+	vertical-align:middle;
+}

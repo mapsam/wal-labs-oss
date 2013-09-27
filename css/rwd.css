@@ -1,0 +1,60 @@
+/* Media Queries */
+/* landscape tablet up */
+@media (min-width: 768px) {
+	nav {
+		position:fixed;
+		float:left;
+		clear:left;
+		height:100%;
+		width:250px;
+	}
+	#main {
+		position:absolute;
+		left:251px;
+		right:0;
+		top:0;
+		height:100%;
+	}
+	#main ul {
+		padding:20px;
+	}
+	#main ul li {
+		display:inline-block;
+		width:300px;
+		margin:10px;
+		height:150px;
+	}
+	.repo-content {
+		display:block;
+		height:120px;
+	}
+}
+
+ 
+/* portrait tablet down */
+@media (max-width: 767px) {
+	nav {
+		display:block;
+		margin:0 auto;
+		width:100%;
+	}
+	#main {
+		display:block;
+		margin:0 auto;
+		width:100%;
+		height:500px;
+	}
+	#main ul {
+		padding:0;
+	}
+	#main ul li {
+		display:block;
+		width:100%;
+		margin-top:2px;
+		height:120px;
+	}
+	.repo-content {
+		display:block;
+		height:90px;
+	}
+}
