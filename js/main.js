@@ -12,28 +12,38 @@ function fetch() {
 		success: function(data) {
 			console.log(data);
 			run(data);
+
 		}
 	});
 }
 
 function run(data) {
+	// populate filter controls and hide other elements
+
 	// populate control elements
 	controls(data);
+
 	// populate repository elements
 	repos(data);
+
 	// build UI according to populated control list
-	interaction();
+	$('#controls ul').hide();
+	$('#' + filters()).show();
+	filters();
+
 	// fade in repos
 	$('#main ul').fadeIn(700);
+
 	// hide the loading gif
 	hideLoad();
+
 }
 
 function controls(data) {
 	var languages = ['All'];
 	$.each(data, function(index, element) {
 	
-		// populate control section with languages
+		// get element language to build language control section
 		var lang = element.language,
 			controls;
 		// test if value is 'null'
@@ -56,7 +66,8 @@ function controls(data) {
 			}
 			languages.push(lang);
 		}
-		$('#controls').append(controls);
+		// populate language-control section
+		$('#languages-control').append(controls);
 	});
 }
 
@@ -84,9 +95,29 @@ function repos(data) { // populate repos
 	});
 }
 
-function interaction() {
+function filters() {
+	var id = 'languages-control'
+	$('#filters li').click( function() {
+		$('#controls ul').hide();
+		id = $(this).attr('id') + '-control';
+		console.log(id);
+		$('#' + id).fadeIn(100);
+		// run specific control UI based on id
+		if (id == 'languages-control') {
+			return langControls();
+		} else if (id == 'time-control') {
+			return timeControls();
+		} else { // activity-control
+			return activityControls();
+		}
+	});
+	// return id for use in gathering data
+	return id;
+}
+
+function langControls() {
 	// control UI & action
-	$('#all').addClass('active');
+	$('#All').addClass('active');
 	$('nav ul li').click(function(){
 		// add/remove active class
 		$('nav ul li').removeClass('active');
@@ -94,7 +125,6 @@ function interaction() {
 
 		// get class of clicked control
 		var type = $(this).attr('id');
-		console.log(type);
 		if (type == 'All') {
 			$('#main ul li').show();
 		} else {
@@ -104,6 +134,9 @@ function interaction() {
 		// use to show specific repos
 	});
 }
+
+function timeControls(){}
+function activityControls(){}
 
 function hideLoad() {
 	$('#loading').hide();
