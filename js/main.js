@@ -6,7 +6,7 @@ function init() {
 function fetch() {
 	$.ajax({
 		type: "GET",
-		url: "https://api.github.com/users/svmatthews/repos",
+		url: "https://api.github.com/orgs/walmartlabs/repos",
 		contentType: "application/json; charset=utf-8",
 		format: "json",
 		success: function(data) {
