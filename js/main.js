@@ -30,6 +30,7 @@ function run(data) {
 	$('#controls ul').hide();
 	$('#' + filters()).show();
 	filters();
+	langControls();
 
 	// fade in repos
 	$('#main ul').fadeIn(700);
@@ -39,6 +40,9 @@ function run(data) {
 
 }
 
+// this dynamically fills the control buttons for the language section
+// since we don't have different controls for 'time' and 'activity' we do
+// not need to load anything for them
 function controls(data) {
 	var languages = ['All'];
 	$.each(data, function(index, element) {
