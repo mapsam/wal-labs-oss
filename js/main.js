@@ -28,7 +28,7 @@ function run(data) {
 
 	// build UI according to populated control list
 	$('#controls ul').hide();
-	$('#' + filters()).show();
+	$('#' + filters(data)).fadeIn(500);
 	filters();
 	langControls();
 
@@ -99,20 +99,19 @@ function repos(data) { // populate repos
 	});
 }
 
-function filters() {
+function filters(data) {
 	var id = 'languages-control'
 	$('#filters li').click( function() {
 		$('#controls ul').hide();
 		id = $(this).attr('id') + '-control';
-		console.log(id);
 		$('#' + id).fadeIn(100);
 		// run specific control UI based on id
 		if (id == 'languages-control') {
 			return langControls();
 		} else if (id == 'time-control') {
-			return timeControls();
+			return timeControls(data);
 		} else { // activity-control
-			return activityControls();
+			return activityControls(data);
 		}
 	});
 	// return id for use in gathering data
@@ -139,8 +138,74 @@ function langControls() {
 	});
 }
 
-function timeControls(){}
-function activityControls(){}
+function timeControls(data) {
+	orderByRecent(data);
+	$('#recently-updated').addClass('active');
+	$('#recently-updated').click(function(){
+		orderByRecent(data);
+	});
+	$('#oldest').click(function(){
+		orderByOldest(data);
+	});
+	$('#newest').click(function(){
+		orderByNewest(data);
+	});
+}
+
+function orderByRecent(data) {
+	var recentArray = [];
+	$.each(data, function(index, element) {
+		// convert time to number
+		// intial date format "2013-09-23T17:35:56Z"
+		var stringtime = element.pushed_at;
+		stringtime = stringtime.replace(/-/g, '');
+		stringtime = stringtime.replace(/T/g, '');
+		stringtime = stringtime.replace(/:/g, '');
+		stringtime = stringtime.replace(/Z/g, '');
+		time = parseInt(stringtime);
+		recentArray.push(time);
+		// push to array
+	});
+	recentArray = recentArray.sort(function(a, b) {return b-a} );
+	console.log(recentArray);
+	for (mug=0; mug < recentArray.length; mug++) {
+		var repo = $.each(data, function(index, element) {
+			var stringtime = element.pushed_at;
+			stringtime = stringtime.replace(/-/g, '');
+			stringtime = stringtime.replace(/T/g, '');
+			stringtime = stringtime.replace(/:/g, '');
+			stringtime = stringtime.replace(/Z/g, '');
+			time = parseInt(stringtime);
+			if (time == recentArray[mug]) {
+				var lang;
+				if (!(element.language)) {
+					lang = 'Undefined';
+				} else if (element.language == 'C++') {
+					lang = 'Cplus';
+				} else {
+					lang = element.language;
+				}
+				// html to be appended to <li> element
+				var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
+							+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
+				// create the list element
+				var info = $('<li>', {
+					'class': lang,
+					'html': html
+				});
+				// attach the element with the information to the repo container
+				$('#repos').append(info);
+			}
+		});
+	}
+}
+function orderByOldest() {
+
+}
+function orderByNewest() {
+
+}
+
 
 function hideLoad() {
 	$('#loading').hide();
