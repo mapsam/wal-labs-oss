@@ -143,6 +143,7 @@ function langControls() {
 function timeControls(data) {
 	// run recently updated first so something is active right away
 	orderByRecent(data);
+	console.log(orderByRecent(data));
 	$('#recently-updated').addClass('active');
 	
 	// recently updated function call
