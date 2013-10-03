@@ -133,6 +133,11 @@ nav ul li p {
 #Shell, .Shell {border-color:#F2E6D8}
 #PHP, .PHP {border-color:#F2E6D8}
 
+#recently-updated {border-color:#027DC5;}
+#oldest {border-color:#028dde;}
+#newest {border-color:#039df7;}
+#forks {border-color:#;}
+#watchers {border-color:#;}
 
 .active, .active p {
 	color:#333;
