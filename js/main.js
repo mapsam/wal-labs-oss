@@ -176,51 +176,21 @@ function activityControls(data) {
 	$('#watchers').click(function(){
 		orderByWatchers(data);
 	});
-} 
+}
 
 function orderByRecent(data) {
 	$('#repos').html('');
 	var recentArray = [];
 	$.each(data, function(index, element) {
-		// convert time to number
-		// intial date format "2013-09-23T17:35:56Z"
-		var stringtime = element.pushed_at;
-		stringtime = stringtime.replace(/-/g, '');
-		stringtime = stringtime.replace(/T/g, '');
-		stringtime = stringtime.replace(/:/g, '');
-		stringtime = stringtime.replace(/Z/g, '');
-		time = parseInt(stringtime);
-		recentArray.push(time);
-		// push to array
+		recentArray.push(dateToInt(element.pushed_at)); // date to integer into array
 	});
-	recentArray = recentArray.sort(function(a, b) {return b-a} );
+	recentArray = recentArray.sort(function(a, b) {return b-a} ); // b-a is high to low
 	for (mug=0; mug < recentArray.length; mug++) {
 		var repo = $.each(data, function(index, element) {
-			var stringtime = element.pushed_at;
-			stringtime = stringtime.replace(/-/g, '');
-			stringtime = stringtime.replace(/T/g, '');
-			stringtime = stringtime.replace(/:/g, '');
-			stringtime = stringtime.replace(/Z/g, '');
-			time = parseInt(stringtime);
+			var time = dateToInt(element.pushed_at);
 			if (time == recentArray[mug]) {
-				var lang;
-				if (!(element.language)) {
-					lang = 'Undefined';
-				} else if (element.language == 'C++') {
-					lang = 'Cplus';
-				} else {
-					lang = element.language;
-				}
-				// html to be appended to <li> element
-				var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
-							+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-				// create the list element
-				var info = $('<li>', {
-					'class': lang,
-					'html': html
-				});
-				// attach the element with the information to the repo container
-				$('#repos').append(info);
+				var info = collectRepoInfo(element);
+				$('#repos').append(info); // attach the element with the information to the repo container
 			}
 		});
 	}
@@ -229,43 +199,14 @@ function orderByOldest(data) {
 	$('#repos').html('');
 	var recentArray = [];
 	$.each(data, function(index, element) {
-		// convert time to number
-		// intial date format "2013-09-23T17:35:56Z"
-		var stringtime = element.created_at;
-		stringtime = stringtime.replace(/-/g, '');
-		stringtime = stringtime.replace(/T/g, '');
-		stringtime = stringtime.replace(/:/g, '');
-		stringtime = stringtime.replace(/Z/g, '');
-		time = parseInt(stringtime);
-		recentArray.push(time);
-		// push to array
+		recentArray.push(dateToInt(element.created_at)); // date to integer into array
 	});
-	recentArray = recentArray.sort(function(a, b) {return a-b} );
+	recentArray = recentArray.sort(function(a, b) {return a-b} ); // a-b is low to high
 	for (mug=0; mug < recentArray.length; mug++) {
 		var repo = $.each(data, function(index, element) {
-			var stringtime = element.created_at;
-			stringtime = stringtime.replace(/-/g, '');
-			stringtime = stringtime.replace(/T/g, '');
-			stringtime = stringtime.replace(/:/g, '');
-			stringtime = stringtime.replace(/Z/g, '');
-			time = parseInt(stringtime);
+			var time = dateToInt(element.created_at);
 			if (time == recentArray[mug]) {
-				var lang;
-				if (!(element.language)) {
-					lang = 'Undefined';
-				} else if (element.language == 'C++') {
-					lang = 'Cplus';
-				} else {
-					lang = element.language;
-				}
-				// html to be appended to <li> element
-				var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.created_at + '</p><p>' + element.description + '</p></div>'
-							+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-				// create the list element
-				var info = $('<li>', {
-					'class': lang,
-					'html': html
-				});
+				var info = collectRepoInfo(element);
 				// attach the element with the information to the repo container
 				$('#repos').append(info);
 			}
@@ -276,49 +217,22 @@ function orderByNewest(data) {
 	$('#repos').html('');
 	var recentArray = [];
 	$.each(data, function(index, element) {
-		// convert time to number
-		// intial date format "2013-09-23T17:35:56Z"
-		var stringtime = element.created_at;
-		stringtime = stringtime.replace(/-/g, '');
-		stringtime = stringtime.replace(/T/g, '');
-		stringtime = stringtime.replace(/:/g, '');
-		stringtime = stringtime.replace(/Z/g, '');
-		time = parseInt(stringtime);
-		recentArray.push(time);
-		// push to array
+		recentArray.push(dateToInt(element.created_at)); // date to integer into array
 	});
-	recentArray = recentArray.sort(function(a, b) {return b-a} );
+	recentArray = recentArray.sort(function(a, b) {return b-a} ); 
 	for (mug=0; mug < recentArray.length; mug++) {
 		var repo = $.each(data, function(index, element) {
-			var stringtime = element.created_at;
-			stringtime = stringtime.replace(/-/g, '');
-			stringtime = stringtime.replace(/T/g, '');
-			stringtime = stringtime.replace(/:/g, '');
-			stringtime = stringtime.replace(/Z/g, '');
-			time = parseInt(stringtime);
+			var time = dateToInt(element.created_at);
 			if (time == recentArray[mug]) {
 				var lang;
-				if (!(element.language)) {
-					lang = 'Undefined';
-				} else if (element.language == 'C++') {
-					lang = 'Cplus';
-				} else {
-					lang = element.language;
-				}
-				// html to be appended to <li> element
-				var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.created_at + '</p><p>' + element.description + '</p></div>'
-							+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-				// create the list element
-				var info = $('<li>', {
-					'class': lang,
-					'html': html
-				});
+				var info = collectRepoInfo(element);
 				// attach the element with the information to the repo container
 				$('#repos').append(info);
 			}
 		});
 	}
 }
+
 function orderByForks(data) {
 	$('#repos').html('');
 	var forksArray = [];
@@ -335,22 +249,7 @@ function orderByForks(data) {
 			if (fork == forksArray[mug]) {
 				if ($.inArray(repo, repoArray) == -1) { // if repo has already been processed and added to the front, don't do this
 					repoArray.push(repo);
-					var lang;
-					if (!(element.language)) {
-						lang = 'Undefined';
-					} else if (element.language == 'C++') {
-						lang = 'Cplus';
-					} else {
-						lang = element.language;
-					}
-					// html to be appended to <li> element
-					var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
-								+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-					// create the list element
-					var info = $('<li>', {
-						'class': lang,
-						'html': html
-					});
+					var info = collectRepoInfo(element);
 					// attach the element with the information to the repo container
 					$('#repos').append(info);
 				}
@@ -358,6 +257,7 @@ function orderByForks(data) {
 		});
 	}
 }
+
 function orderByWatchers(data) {
 	$('#repos').html('');
 	var watchersArray = [];
@@ -374,28 +274,40 @@ function orderByWatchers(data) {
 			if (watch == watchersArray[mug]) {
 				if ($.inArray(repo, repoArray) == -1) { // if repo has already been processed and added to the front, don't do this
 					repoArray.push(repo);
-					var lang;
-					if (!(element.language)) {
-						lang = 'Undefined';
-					} else if (element.language == 'C++') {
-						lang = 'Cplus';
-					} else {
-						lang = element.language;
-					}
-					// html to be appended to <li> element
-					var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
-								+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-					// create the list element
-					var info = $('<li>', {
-						'class': lang,
-						'html': html
-					});
+					var info = collectRepoInfo(element);
 					// attach the element with the information to the repo container
 					$('#repos').append(info);
 				}
 			}
 		});
 	}
+}
+
+function collectRepoInfo(element) {
+	var lang;
+	if (!(element.language)) {
+		lang = 'Undefined';
+	} else if (element.language == 'C++') {
+		lang = 'Cplus';
+	} else {
+		lang = element.language;
+	}
+	var html = '<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
+	+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
+	var info = $('<li>', {
+		'class': lang,
+		'html': html
+	});
+	return info;
+}
+
+function dateToInt(string) {
+	string = string.replace(/-/g, '');
+	string = string.replace(/T/g, '');
+	string = string.replace(/:/g, '');
+	string = string.replace(/Z/g, '');
+	timeInt = parseInt(string);
+	return timeInt;
 }
 
 function hideLoad() {
