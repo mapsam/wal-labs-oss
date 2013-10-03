@@ -12,7 +12,6 @@ function fetch() {
 		success: function(data) {
 			console.log(data);
 			run(data);
-
 		}
 	});
 }
