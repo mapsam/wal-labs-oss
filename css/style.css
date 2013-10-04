@@ -201,13 +201,17 @@ h1 a:hover {
 }
 .repo-content p {
 	font-size:0.9em;
+	line-height: 1.2em;
 	font-weight:300;
 	color:#666;
+}
+strong {
+	font-weight:600;
 }
 .repo-meta {
 	display:block;
 	margin:auto;
-	height:20px;
+	line-height:1.4em;
 	font-size:0.8em;
 	color:#888;
 }

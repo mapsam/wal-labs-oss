@@ -80,23 +80,7 @@ function controls(data) {
 function repos(data) { // populate repos
 	$('#repos').html('');
 	$.each(data, function(index, element) {
-		// test if value is null or C++ since '+' doesn't work in CSS class strings
-		var lang;
-		if (!(element.language)) {
-			lang = 'Undefined';
-		} else if (element.language == 'C++') {
-			lang = 'Cplus';
-		} else {
-			lang = element.language;
-		}
-		// html to be appended to <li> element
-		var html = 	'<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.description + '</p></div>'
-					+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
-		// create the list element
-		var info = $('<li>', {
-			'class': lang,
-			'html': html
-		});
+		var info = collectRepoInfo(element);
 		// attach the element with the information to the repo container
 		$('#repos').append(info);
 	});
@@ -195,6 +179,7 @@ function orderByRecent(data) {
 		});
 	}
 }
+
 function orderByOldest(data) {
 	$('#repos').html('');
 	var recentArray = [];
@@ -213,6 +198,7 @@ function orderByOldest(data) {
 		});
 	}
 }
+
 function orderByNewest(data) {
 	$('#repos').html('');
 	var recentArray = [];
@@ -284,21 +270,39 @@ function orderByWatchers(data) {
 }
 
 function collectRepoInfo(element) {
+	// get language for card class
 	var lang;
-	if (!(element.language)) {
-		lang = 'Undefined';
-	} else if (element.language == 'C++') {
-		lang = 'Cplus';
-	} else {
-		lang = element.language;
+	if (!(element.language)) {lang = 'Undefined';}
+	else if (element.language == 'C++') {lang = 'Cplus';}
+	else {lang = element.language;}
+
+	// create nice date format
+	var created = dateToNice(element.created_at);
+	var updated = dateToNice(element.pushed_at);
+
+	// if description is longer than 175 characters, shorten it
+	var desc = element.description;
+	if (desc.length > 150) {
+		desc = desc.substr(0,150) + '<a href="' + element.svn_url + '">...</a>';
 	}
-	var html = '<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + element.pushed_at + '</p><p>' + element.description + '</p></div>'
-	+ '<div class="repo-meta">&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
+
+	// construct html for adding to <li> element
+	var html = '<div class="repo-content"><h1><a target="_blank" href="' + element.svn_url + '">' + element.name + '</a></h1><p>' + desc + '</p></div>'
+	+ '<div class="repo-meta">Updated: <strong>' + updated[0] + '</strong> | Created: <strong>' + created[0] + '</strong><br>&#9733; ' + element.watchers + '<img src="img/fork.png"> ' + element.forks + '</div>';
 	var info = $('<li>', {
 		'class': lang,
 		'html': html
 	});
 	return info;
+}
+
+function dateToNice(string) {
+	string = string.split("T");
+	date = string[0].replace(/-/g, '/');
+	year = date.substr(0,4);
+	date = date.substr(5) + '/' + year;
+	time = string[1].replace(/T/g, '').replace(/Z/g, '');
+	return [date, time];
 }
 
 function dateToInt(string) {
